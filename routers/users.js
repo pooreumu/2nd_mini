@@ -5,3 +5,4 @@ const jwt = require("jsonwebtoken");
 const Users = require("../schemas/user");
 
 module.exports = router;
+
