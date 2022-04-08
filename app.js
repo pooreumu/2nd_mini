@@ -13,8 +13,8 @@ const usersRouter = require("./routers/users");
 const restaurantsRouter = require("./routers/restaurants");
 
 const request_middleware = (req, res, next) => {
-  console.log("Request URL:", req.originalUrl, " - ", new Date());
-  next();
+    console.log("Request URL:", req.originalUrl, " - ", new Date());
+    next();
 };
 
 app.use(cors());
@@ -28,5 +28,5 @@ app.use("/users", [usersRouter]);
 app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
 app.listen(process.env.PORT, () => {
-  console.log("서버가 켜졌어요");
+    console.log("서버가 켜졌어요");
 });
