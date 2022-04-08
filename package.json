@@ -1,31 +1,33 @@
 {
-    "name": "be_2nd_mini",
-    "version": "1.0.0",
-    "description": "",
-    "main": "app.js",
-    "scripts": {
-        "test": "jest"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/pooreumu/2nd_mini.git"
-    },
-    "author": "",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/pooreumu/2nd_mini/issues"
-    },
-    "homepage": "https://github.com/pooreumu/2nd_mini#readme",
-    "dependencies": {
-        "cors": "^2.8.5",
-        "dotenv": "^16.0.0",
-        "express": "^4.17.3",
-        "jsonwebtoken": "^8.5.1",
-        "mongoose": "^6.2.10"
-    },
-    "devDependencies": {
-        "jest": "^27.5.1",
-        "swagger-autogen": "^2.20.8",
-        "swagger-ui-express": "^4.3.0"
-    }
+
+  "name": "be_2nd_mini",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pooreumu/2nd_mini.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pooreumu/2nd_mini/issues"
+  },
+  "homepage": "https://github.com/pooreumu/2nd_mini#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.2.10"
+  },
+  "devDependencies": {
+    "swagger-autogen": "^2.20.8",
+    "swagger-ui-express": "^4.3.0"
+  }
+
 }
