@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
-const commentsSchema = mongoose.Schema({
-  restaurantTitle: { type: Number, required: true },
-  restaurantImg: { type: URL, require: true },
+
+const restaurantSchema = mongoose.Schema({
+  restaurantTitle: { type: String, required: true },
+  restaurantImg: { type: String, required: true },
+
 });
-module.exports = mongoose.model("Comment", commentsSchema);
+module.exports = mongoose.model("Restaurant", restaurantSchema);
