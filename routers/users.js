@@ -175,5 +175,4 @@ router.post("/auth", async (req, res) => {
     });
 });
 
-
 module.exports = router;

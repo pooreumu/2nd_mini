@@ -3,7 +3,6 @@ const authMiddleware = require("../middlewares/auth-middleware");
 const Restaurant = require("../schemas/restaurant");
 const Comment = require("../schemas/comment");
 
-
 router.get("/", async (req, res) => {
     const restaurants = await Restaurant.find();
     res.send({ restaurants });
@@ -11,8 +10,8 @@ router.get("/", async (req, res) => {
 
 router.get("/:name", async (req, res) => {
     const restaurantTitle = req.params.name;
-    const { chickenMenu, chickenPrice, nickname, comment } = await Comment.findOne({ restaurantTitle });
-    res.send({ chickenMenu, chickenPrice, nickname, comment });
+    const commentDb = await Comment.find({ restaurantTitle }, { _id: false, commentIdx: false });
+    res.status(200).json({ commentDb });
 });
 
 // 댓글 POST API
@@ -56,6 +55,5 @@ router.delete('/:name/comments/:commentId', async (req, res) => {
         res.status(200).json({ success: true, msg: '삭제 완료!' })
     }
 })
-
 
 module.exports = router;
