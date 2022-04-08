@@ -4,22 +4,28 @@ const Restaurant = require("../schemas/restaurant");
 const Comment = require("../schemas/comment");
 
 router.get("/", async (req, res) => {
+    // #swagger.tags = ["Restaurant"]
+    // #swagger.summary = "전체 치킨 프랜차이즈 목록 조회 페이지"
+    // #swagger.description = "전체 치킨 프랜차이즈 목록 조회 페이지"
     const restaurants = await Restaurant.find();
-    res.send({ restaurants });
+    res.send({restaurants});
 });
 
 router.get("/:name", async (req, res) => {
+    // #swagger.tags = ["Restaurant"]
+    // #swagger.summary = "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)"
+    // #swagger.description = "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)"
     const restaurantTitle = req.params.name;
-    const commentDb = await Comment.find({ restaurantTitle }, { _id: false, commentIdx: false });
-    res.status(200).json({ commentDb });
+    const commentDb = await Comment.find({restaurantTitle}, {_id: false, commentIdx: false});
+    res.status(200).json({commentDb});
 });
 
-// #swagger.tags = ["Comment"]
-// #swagger.summary = "댓글 관련 API"
-// #swagger.description = "댓글 작성 API"
 router.post('/:name/comments', async (req, res) => {
-    const { name } = req.params
-    const { chickenMenu, nickname, comment } = req.body
+    // #swagger.tags = ["Comment"]
+    // #swagger.summary = "치킨 프렌차이즈 상세 페이지 - 댓글 작성"
+    // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 작성"
+    const {name} = req.params
+    const {chickenMenu, nickname, comment} = req.body
     let commentIdx = 0
     const existCommentDb = await Comment.find({})
     if (existCommentDb.length === 0) {
@@ -34,33 +40,33 @@ router.post('/:name/comments', async (req, res) => {
         nickname,
         comment
     })
-    res.status(201).json({ success: true, msg: '댓글 작성 완료' })
+    res.status(201).json({success: true, msg: '댓글 작성 완료'})
 })
 
-// #swagger.tags = ["Comment"]
-// #swagger.summary = "댓글 관련 API"
-// #swagger.description = "댓글 수정 API"
 router.put('/:name/comments/:commentId', async (req, res) => {
+    // #swagger.tags = ["Comment"]
+    // #swagger.summary = "치킨 프렌차이즈 상세 페이지 - 댓글 수정"
+    // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 수정"
     const commentIdx = req.params.commentId
-    const { comment } = req.body
-    const existCommentDb = await Comment.find({ commentIdx })
+    const {comment} = req.body
+    const existCommentDb = await Comment.find({commentIdx})
     if (existCommentDb) {
-        await Comment.updateOne({ commentIdx }, { $set: { comment } })
-        res.status(200).json({ success: true, msg: '수정 완료' })
+        await Comment.updateOne({commentIdx}, {$set: {comment}})
+        res.status(200).json({success: true, msg: '수정 완료'})
     } else {
-        res.status(401).json({ success: false, msg: '권한이 없습니다.' })
+        res.status(401).json({success: false, msg: '권한이 없습니다.'})
     }
 })
 
-// #swagger.tags = ["Comment"]
-// #swagger.summary = "댓글 관련 API"
-// #swagger.description = "댓글 삭제 API"
 router.delete('/:name/comments/:commentId', async (req, res) => {
+    // #swagger.tags = ["Comment"]
+    // #swagger.summary = "치킨 프렌차이즈 상세 페이지 - 댓글 삭제"
+    // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 삭제"
     const commentIdx = req.params.commentId
-    const existCommentDb = await Comment.find({ commentIdx })
+    const existCommentDb = await Comment.find({commentIdx})
     if (existCommentDb) {
-        await Comment.deleteOne({ commentIdx })
-        res.status(200).json({ success: true, msg: '삭제 완료!' })
+        await Comment.deleteOne({commentIdx})
+        res.status(200).json({success: true, msg: '삭제 완료!'})
     }
 })
 
