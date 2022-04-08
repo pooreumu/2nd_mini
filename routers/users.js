@@ -4,8 +4,6 @@ const jwt = require("jsonwebtoken");
 
 const Users = require("../schemas/user");
 
-
-
 //password hashing module
 const crypto = require('crypto');
 const {response} = require("express");
@@ -28,7 +26,7 @@ const createHashedPassword = (plainPassword) =>
     });
 
 router.get("/", async (req, res) => {
-    // #swagger.tags = ["User"]
+    // #swagger.tags = ["Auth"]
     // #swagger.summary = "회원가입 페이지"
     // #swagger.description = "회원가입 페이지"
 
@@ -36,7 +34,7 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-    // #swagger.tags = ["User"]
+    // #swagger.tags = ["Auth"]
     // #swagger.summary = "회원가입 페이지 - 회원가입하기"
     // #swagger.description = "아이디는 숫자와 영문을 필수로 포함한 3~20자리/비밀번호는 숫자와 영문을 필수로 포함하고 특수문자를 사용 가능한 4~20자리"
     const {nickname, password, confirmPassword} = req.body;
@@ -97,7 +95,7 @@ router.post("/", async (req, res) => {
 
 //핸들러 앞에 authMiddleware를 붙이지 않으면 문제가 발생함.
 router.get("/me", authMiddleware, async (req, res) => {
-    // #swagger.tags = ["User"]
+    // #swagger.tags = ["Auth"]
     // #swagger.summary = "본인 확인"
     // #swagger.description = "본인 확인"
     const {user} = res.locals;
@@ -110,14 +108,14 @@ router.get("/me", authMiddleware, async (req, res) => {
 });
 
 router.get("/auth", async (req, res) => {
-    // #swagger.tags = ["User"]
+    // #swagger.tags = ["Auth"]
     // #swagger.summary = "로그인 페이지"
     // #swagger.description = "로그인 페이지"
     res.status(200)
 });
 
 router.post("/auth", async (req, res) => {
-    // #swagger.tags = ["User"]
+    // #swagger.tags = ["Auth"]
     // #swagger.summary = "로그인 페이지 - 로그인하기"
     // #swagger.description = "로그인 페이지 - 로그인하기"
     const {nickname, password} = req.body;
