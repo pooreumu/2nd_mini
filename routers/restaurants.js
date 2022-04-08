@@ -14,7 +14,9 @@ router.get("/:name", async (req, res) => {
     res.status(200).json({ commentDb });
 });
 
-// 댓글 POST API
+// #swagger.tags = ["Comment"]
+// #swagger.summary = "댓글 관련 API"
+// #swagger.description = "댓글 작성 API"
 router.post('/:name/comments', async (req, res) => {
     const { name } = req.params
     const { chickenMenu, nickname, comment } = req.body
@@ -35,6 +37,9 @@ router.post('/:name/comments', async (req, res) => {
     res.status(201).json({ success: true, msg: '댓글 작성 완료' })
 })
 
+// #swagger.tags = ["Comment"]
+// #swagger.summary = "댓글 관련 API"
+// #swagger.description = "댓글 수정 API"
 router.put('/:name/comments/:commentId', async (req, res) => {
     const commentIdx = req.params.commentId
     const { comment } = req.body
@@ -47,6 +52,9 @@ router.put('/:name/comments/:commentId', async (req, res) => {
     }
 })
 
+// #swagger.tags = ["Comment"]
+// #swagger.summary = "댓글 관련 API"
+// #swagger.description = "댓글 삭제 API"
 router.delete('/:name/comments/:commentId', async (req, res) => {
     const commentIdx = req.params.commentId
     const existCommentDb = await Comment.find({ commentIdx })
