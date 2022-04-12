@@ -27,6 +27,10 @@ app.use("/users", [usersRouter]);
 
 app.use("/api", swaggerUi.serve, swaggerUi.setup(swaggerFile));
 
+app.get("/", (req, res) => {
+    res.redirect("/restaurants");
+});
+
 app.listen(process.env.PORT, () => {
     console.log("서버가 켜졌어요");
 });
