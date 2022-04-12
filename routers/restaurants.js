@@ -28,8 +28,9 @@ router.post("/:name/comments", authMiddleware, async (req, res) => {
     // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 작성"
     const { name } = req.params;
     const { chickenMenu, comment } = req.body;
-    const nickname = res.locals;
-    console.log(nickname);
+    const { user } = res.locals;
+    const nickname = user.nickname;
+    const chickenPrice = "0";
     let commentIdx = 0;
     const existCommentDb = await Comment.find({});
     if (existCommentDb.length === 0) {
@@ -40,6 +41,7 @@ router.post("/:name/comments", authMiddleware, async (req, res) => {
     await Comment.create({
         restaurantTitle: name,
         chickenMenu,
+        chickenPrice,
         commentIdx,
         nickname,
         comment,
@@ -75,14 +77,3 @@ router.delete("/:name/comments/:commentId", async (req, res) => {
 });
 
 module.exports = router;
-
-router.post("/:name", async (req, res) => {
-    const { restaurantTitle, menuTitle, menuPrice } = req.body;
-
-    await Menu.create({
-        restaurantTitle,
-        menuTitle,
-        menuPrice,
-    });
-    res.status(201).json({ success: true, msg: "작성 완료" });
-});
