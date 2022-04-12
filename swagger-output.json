@@ -10,5 +10,273 @@
   "schemes": [
     "http"
   ],
-  "paths": {}
+  "paths": {
+    "/restaurants/": {
+      "get": {
+        "tags": [
+          "Restaurant"
+        ],
+        "summary": "전체 치킨 프랜차이즈 목록 조회 페이지",
+        "description": "전체 치킨 프랜차이즈 목록 조회 페이지",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurants/{name}": {
+      "get": {
+        "tags": [
+          "Restaurant"
+        ],
+        "summary": "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)",
+        "description": "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/restaurants/{name}/comments": {
+      "post": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "치킨 프렌차이즈 상세 페이지 - 댓글 작성",
+        "description": "치킨 프렌차이즈 상세 페이지 - 댓글 작성",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "chickenMenu": {
+                  "example": "any"
+                },
+                "nickname": {
+                  "example": "any"
+                },
+                "comment": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/restaurants/{name}/comments/{commentId}": {
+      "put": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "치킨 프렌차이즈 상세 페이지 - 댓글 수정",
+        "description": "치킨 프렌차이즈 상세 페이지 - 댓글 수정",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Comment"
+        ],
+        "summary": "치킨 프렌차이즈 상세 페이지 - 댓글 삭제",
+        "description": "치킨 프렌차이즈 상세 페이지 - 댓글 삭제",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "commentId",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "회원가입 페이지",
+        "description": "회원가입 페이지",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "회원가입 페이지 - 회원가입하기",
+        "description": "아이디는 숫자와 영문을 필수로 포함한 3~20자리/비밀번호는 숫자와 영문을 필수로 포함하고 특수문자를 사용 가능한 4~20자리",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickname": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                },
+                "confirmPassword": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "본인 확인",
+        "description": "본인 확인",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/users/auth": {
+      "get": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "로그인 페이지",
+        "description": "로그인 페이지",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "로그인 페이지 - 로그인하기",
+        "description": "로그인 페이지 - 로그인하기",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nickname": {
+                  "example": "any"
+                },
+                "password": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    }
+  }
 }
