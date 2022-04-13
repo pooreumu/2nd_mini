@@ -17,8 +17,9 @@ router.get("/:name", async (req, res) => {
     // #swagger.summary = "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)"
     // #swagger.description = "치킨 프렌차이즈 상세 페이지(상세 메뉴 및 댓글 조회)"
     const restaurantTitle = req.params.name;
-    const menus = await Menu.find({ restaurantTitle }, { _id: false });
-    const commentDb = await Comment.find({ restaurantTitle }, { _id: false, commentIdx: false });
+    let menus = await Menu.find({ restaurantTitle }, { _id: false });
+    menus = menus.reverse();
+    const commentDb = await Comment.find({ restaurantTitle }, { _id: false });
     res.status(200).json({ commentDb, menus });
 });
 
@@ -33,23 +34,28 @@ router.post("/:name/comments", authMiddleware, async (req, res) => {
     const chickenPrice = "0";
     let commentIdx = 0;
     const existCommentDb = await Comment.find({});
-    if (existCommentDb.length === 0) {
-        commentIdx = 0;
+    const confirmExistMenuDb = await Menu.findOne({ menuTitle: chickenMenu });
+    if (!confirmExistMenuDb) {
+        res.status(400).json({ success: false, msg: "메뉴를 선택해 주세요" });
     } else {
-        commentIdx = existCommentDb[existCommentDb.length - 1].commentIdx + 1;
+        if (existCommentDb.length === 0) {
+            commentIdx = 0;
+        } else {
+            commentIdx = existCommentDb[existCommentDb.length - 1].commentIdx + 1;
+        }
+        await Comment.create({
+            restaurantTitle: name,
+            chickenMenu,
+            chickenPrice,
+            commentIdx,
+            nickname,
+            comment,
+        });
+        res.status(201).json({ success: true, msg: "댓글 작성 완료" });
     }
-    await Comment.create({
-        restaurantTitle: name,
-        chickenMenu,
-        chickenPrice,
-        commentIdx,
-        nickname,
-        comment,
-    });
-    res.status(201).json({ success: true, msg: "댓글 작성 완료" });
 });
 
-router.put("/:name/comments/:commentId", async (req, res) => {
+router.put("/:name/comments/:commentId", authMiddleware, async (req, res) => {
     // #swagger.tags = ["Comment"]
     // #swagger.summary = "치킨 프렌차이즈 상세 페이지 - 댓글 수정"
     // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 수정"
@@ -64,7 +70,7 @@ router.put("/:name/comments/:commentId", async (req, res) => {
     }
 });
 
-router.delete("/:name/comments/:commentId", async (req, res) => {
+router.delete("/:name/comments/:commentId", authMiddleware, async (req, res) => {
     // #swagger.tags = ["Comment"]
     // #swagger.summary = "치킨 프렌차이즈 상세 페이지 - 댓글 삭제"
     // #swagger.description = "치킨 프렌차이즈 상세 페이지 - 댓글 삭제"
