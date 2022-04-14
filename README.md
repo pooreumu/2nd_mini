@@ -1,6 +1,6 @@
 # 치킨어때
 - 항해99 6기 미니프로젝트(2)
-- 
+ 
 ## 1. Project S/A
 https://jewel-eagle-6f4.notion.site/2-S-A-c299b584b5044c87ad83868d4ef98552
 
